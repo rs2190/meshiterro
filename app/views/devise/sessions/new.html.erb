@@ -1,10 +1,6 @@
 <h2>Log in</h2>
-<<<<<<< HEAD
 <!--deviseで提供される画面では、フォームを作成するヘルパーとしてform_forが使用されています。form_forは現在は非推奨ですので、form_withへと変更します。-->
 <!-- % form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>-->
-=======
-
->>>>>>> refs/remotes/origin/main
 <%= form_with model: @user, url: user_session_path do |f| %>
   <div class="field">
     <%= f.label :email %><br />

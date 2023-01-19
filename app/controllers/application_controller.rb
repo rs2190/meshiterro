@@ -23,6 +23,47 @@ class ApplicationController < ActionController::Base
 
   # protectedについて
   # https://qiita.com/tbpgr/items/6f1c0c7b77218f74c63e
+
+  # サインイン後の遷移先
+  def after_sign_in_path_for(resource)
+
+    about_path
+
+    # after_sign_in_path_forはDeviseが用意しているメソッドで、サインイン後にどこに遷移するかを設定しているメソッドです。
+
+    # after_sign_in_path_forは、Deviseの初期設定ではroot_pathになっています。サインイン後にルートパスに遷移していたのはこのためです。
+    # 上記のような記述をすることで、初期設定を上書きすることができます。
+    # 今回はAboutページへ遷移するように設定しました。
+
+  end
+
+  # サインアウト後の遷移先
+  def after_sign_out_path_for(resource)
+
+    about_path
+
+    # after_sign_out_path_forはafter_sign_in_path_forと同じくDeviseが用意しているメソッドで、サインアウト後にどこに遷移するかを設定するメソッドです。
+
+    # Deviseのデフォルトは同じくroot_pathになっています。サインアウト後にルートパスに遷移していたのはこのためです。
+    # 今回はAboutページへ遷移するように設定しました
+
+  end
+
+  # after_sign_in_path_for,after_sign_out_path_for について以下を参照。
+  # https://qiita.com/Tatty/items/a9759755e562ac4693ec
+
+  # 使い方
+
+  # アカウント登録後のリダイレクト先
+  # def after_sign_up_path_for(resource)
+  #   リダイレクト先のパス(root_pathとかusers_pathとか)
+  # end
+
+  # アカウント編集後のリダイレクト先
+  # def after_update_path_for(resource)
+  #   リダイレクト先のパス
+  # end
+
   protected
 
   # デバイス版のストロングパラメーター
