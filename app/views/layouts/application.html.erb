@@ -11,6 +11,27 @@
   </head>
 
   <body>
-    <%= yield %>
+    <!-- % if user_signed_in? % は、devise 側で用意しているヘルパーメソッドです。-->
+    <!--devise の機能を使ってログインしているか、ログインしていないかを判断し、どちらかによってブラウザに表示する内容を変更することができます。-->
+    <!--具体的には、以下のような処理を行なっています。-->
+
+    <!--ログイン済みならば true が、ログインしていなければ false が返されます。-->
+    <!--ログイン済みの場合、% if user_signed_in? % から % else % 間のコードが表示されます。-->
+    <!--ログインしていない場合、% else % から  % end % 間のコードが表示されます。-->
+  <header>
+    <% if user_signed_in? %>
+      <li>
+        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+      </li>
+    <% else %>
+      <li>
+        <%= link_to "新規登録", new_user_registration_path %>
+      </li>
+      <li>
+        <%= link_to "ログイン", new_user_session_path %>
+      </li>
+    <% end %>
+  </header>
+  <%= yield %>
   </body>
 </html>
