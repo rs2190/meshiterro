@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'homes#top'
 
+  # 実施コマンド：rails g controller PostImages new index show
   # get 'post_images/new'
   # get 'post_images/index'
   # get 'post_images/show'
