@@ -5,7 +5,7 @@ class PostImage < ApplicationRecord
     # （画像なら :image、動画なら :movie、アバターなら :avatar など）
     has_one_attached :image
 
-    # belongs_to :user
+    belongs_to :user
 
 end
 
