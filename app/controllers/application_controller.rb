@@ -27,7 +27,10 @@ class ApplicationController < ActionController::Base
   # サインイン後の遷移先
   def after_sign_in_path_for(resource)
 
-    about_path
+    # about_path
+
+    # ログイン後の遷移先を投稿画像の一覧画面へ、遷移先へ変更。
+    post_images_path
 
     # after_sign_in_path_forはDeviseが用意しているメソッドで、サインイン後にどこに遷移するかを設定しているメソッドです。
 
