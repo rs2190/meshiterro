@@ -62,6 +62,13 @@ class PostImagesController < ApplicationController
   end
 
   def index
+
+    # 投稿一覧で表示する全ての画像をコントローラで取得します。
+    # post_images_controller.rbファイルのindexに、以下のコードを記述します。
+    # これで、タイムライン上に表示する投稿データを取得できるようになります。
+
+    @post_images = PostImage.all
+
   end
 
   def show

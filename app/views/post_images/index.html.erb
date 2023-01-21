@@ -1,2 +1,25 @@
-<h1>PostImages#index</h1>
-<p>Find me in app/views/post_images/index.html.erb</p>
+
+<!--コントローラから渡された@post_images変数内から1つずつ取り出して、post_image変数へ格納します。-->
+<% @post_images.each do |post_image| %>
+
+<div>
+  <!--mage_tagを使いpost_imageにActiveStorageで設定したimageを表示しています。-->
+  <!--post_image.get_imageの部分はPostImageモデル内に記述したメソッドを呼び出しています。-->
+  <%= image_tag post_image.get_image %>
+
+  <!--※後半の章でユーザー画像設定について学習します。そこで書き換えなどを行ないますので、ここでは仮にsample-author1.jpgとしています。-->
+  <!--1章【アプリケーションを作成・準備しよう】 > 画像を用意 でダウンロードした画像を使用します。-->
+  <P>投稿ユーザー画像：<%= image_tag 'sample-author1.jpg' %></P>
+
+  <!--post_image変数のshop_nameカラムを表示します。 このカラムは、post_imageモデルに定義されています。-->
+  <p>ショップ名：<%= post_image.shop_name %></p>
+
+  <!--post_image変数のcaptionカラムを表示します。 このカラムも、post_imageモデルに定義されています。-->
+  <p>説明：<%= post_image.caption %></p>
+
+  <!--post_image変数のuser_idに関連付けられているuserモデルのnameカラムを表示します。 同様にこのカラムも、post_imageモデルに定義されています。-->
+  <!--実は、nameカラム以外にも、ユーザーモデルにカラムとして定義されている情報であれば取得できます。-->
+  <!--post_image.user.[ユーザーモデルのカラム]-->
+  <p>ユーザーネーム：<%= post_image.user.name %></p>
+</div>
+<% end %>
