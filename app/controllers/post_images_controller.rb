@@ -57,6 +57,7 @@ class PostImagesController < ApplicationController
     # これらをコードの中に記述することで、PostImage モデルに紐づくカラムの値を取得したり、逆に値を代入することができるということになります。
 
     @post_image.save
+    # 一覧画面へ遷移する。
     redirect_to post_images_path
 
   end
@@ -74,6 +75,17 @@ class PostImagesController < ApplicationController
   def show
 
     @post_image = PostImage.find(params[:id])
+
+  end
+
+  def destroy
+
+    # 削除するPostImageレコードを取得
+    @post_image = PostImage.find(params[:id])
+    # PostImageレコードを削除
+    @post_image.destroy
+    # 一覧画面へ遷移する。
+    redirect_to post_images_path
 
   end
 
