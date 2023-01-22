@@ -3,9 +3,14 @@
 <% @post_images.each do |post_image| %>
 
 <div>
-  <!--mage_tagを使いpost_imageにActiveStorageで設定したimageを表示しています。-->
-  <!--post_image.get_imageの部分はPostImageモデル内に記述したメソッドを呼び出しています。-->
-  <%= image_tag post_image.get_image %>
+
+  <!-- link_toで、post_image_path(post_image.id)のリンク先URLを指定しています。 /post_image/:idで、リンクが作成されます。-->
+  <!-- また、link_toでは、doからendの間が、aタグで囲まれた状態になります。 結果、image_tagは、aタグに囲まれたimgタグになります。-->
+  <%= link_to post_image_path(post_image.id) do %>
+      <!-- image_tagを使いpost_imageにActiveStorageで設定したimageを表示しています。-->
+      <!-- post_image.get_imageの部分はPostImageモデル内に記述したメソッドを呼び出しています。-->
+      <%= image_tag post_image.get_image %>
+  <% end %>
 
   <!--※後半の章でユーザー画像設定について学習します。そこで書き換えなどを行ないますので、ここでは仮にsample-author1.jpgとしています。-->
   <!--1章【アプリケーションを作成・準備しよう】 > 画像を用意 でダウンロードした画像を使用します。-->
