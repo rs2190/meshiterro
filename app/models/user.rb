@@ -18,10 +18,7 @@ class User < ApplicationRecord
   # ActiveStorageでプロフィール画像を保存できるように設定
   has_one_attached :profile_image
 
-end
-
-# def get_profile_image
-def get_profile_image(width, height)
+  def get_profile_image(width, height)
 
   unless profile_image.attached?
 
@@ -46,8 +43,11 @@ def get_profile_image(width, height)
 
   # 引数について不安がある場合はRubyを学ぼう8章【FizzBuzzプログラムを作ってみよう】を確認しましょう。
 
+  end
+
 end
 
+# def get_profile_image
 
 # has_many とは
 
