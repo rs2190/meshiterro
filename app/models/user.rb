@@ -15,9 +15,42 @@ class User < ApplicationRecord
 
   has_many :post_images, dependent: :destroy
 
+  # ActiveStorageでプロフィール画像を保存できるように設定
+  has_one_attached :profile_image
+
 end
 
+# def get_profile_image
+def get_profile_image(width, height)
+
+  unless profile_image.attached?
+
+    file_path = Rails.root.join('app/assets/images/sample-author1.jpg')
+    profile_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
+
+  end
+
+  # profile_image.variant(resize_to_limit: [100,100]).processed
+
+  # 上のコードのprofile_image.variant(resize_to_limit: [100, 100]).processedの部分で画像サイズの変更を行っています。
+  # この場合だと、画像を縦横共に100pxのサイズに変換するということになります。
+
+  # しかし、このメソッドだと100x100の画像にサイズを変換することしかできないため利便性がそこまで高くありません。
+  # そのためこのメソッドに対して引数を設定し、受け取った引数のサイズに変換できるようにします。
+
+  profile_image.variant(resize_to_limit: [width,height]).processed
+
+  # 変更点としてはメソッドに対して引数を設定し、引数に設定した値に画像のサイズを変換するようにしました
+  # つまり、このメソッドを実行する際にget_profile_image(100, 100)のように引数を設定すると100x100の画像にリサイズが行われ
+  # get_profile_image(200, 200)のように引数を設定すると200x200の画像にリサイズが行われるということになります。
+
+  # 引数について不安がある場合はRubyを学ぼう8章【FizzBuzzプログラムを作ってみよう】を確認しましょう。
+
+end
+
+
 # has_many とは
+
 # 新しく"has_many"というメソッドがでてきました。
 # "has_many"とは、直訳すると「たくさん持っている」という意味になります。
 # プログラミングではありませんが、例えば英語だと以下のような意味になります。

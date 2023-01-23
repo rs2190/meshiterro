@@ -14,6 +14,11 @@ Rails.application.routes.draw do
   # この場合、only の後に配列で記述されている"new","index","show"のアクション以外は、ルーティングが行われません。
   resources :post_images, only: [:new, :create, :index, :show, :destroy]
 
+  # get 'users/show'
+  # get 'users/edit'
+
+  resources :users, only: [:show, :edit]
+
   get '/homes/about', as: 'about'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
