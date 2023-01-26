@@ -22,7 +22,7 @@ class User < ApplicationRecord
   # Userモデル／PostCommentモデル (1:N)
   # 1人のユーザが複数のコメントを行えるので、1:Nの関係です。
   # Userモデルのデータが削除された場合、PostCommentモデルにあるUser_idのデータが削除される。
-  has_many :post_comments. dependent :destroy
+  has_many :post_comments, dependent: :destroy
 
   # ActiveStorageでプロフィール画像を保存できるように設定
   has_one_attached :profile_image

@@ -22,9 +22,7 @@ class PostImage < ApplicationRecord
 
     # PostImageモデル／PostCommentモデル(1:N)
     # 1つの投稿画像に対して、複数のコメントを設定できます。 これも、1:Nの関係です。
-    has_many :PostComments, dependent: :destroy
-
-
+    has_many :Post_Comments, dependent: :destroy
 
 
     def get_image
