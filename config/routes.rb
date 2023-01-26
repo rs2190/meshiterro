@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :post_images, only: [:new, :create, :index, :show, :destroy] do
 
     # コメントは、投稿画像に対してコメントされます。このため、post_commentsは、post_imagesに結びつきます。 以下のように親子関係になります。
-    resources :post_comments, only: [:create]
+    resources :post_comments, only: [:create, :destroy]
 
     # 以下コマンドを実行し、実際にURLを確認しましょう。
     # 今回追記したpost_comments関連のルーティングは以下のようになります。
