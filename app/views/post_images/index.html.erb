@@ -45,5 +45,8 @@
   <!--実は、nameカラム以外にも、ユーザーモデルにカラムとして定義されている情報であれば取得できます。-->
   <!--post_image.user.[ユーザーモデルのカラム]-->
   <p>ユーザーネーム：<%= post_image.user.name %></p>
+
+  <p><%= link_to "#{post_image.post_comments.count} コメント", post_image_path(post_image.id) %></p>
+
 </div>
 <% end %>
