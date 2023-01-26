@@ -13,7 +13,16 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  # Userモデル／PostImageモデル (1:N)
+  # Meshiterroでは、1人のユーザが複数の画像を投稿できます。
+  # これをモデルで表現すると、Userモデルでの1人のユーザに対して、複数個（N個）のPostImageモデルを関連付けられます。
+  # Userモデルのデータが削除された場合、PostImageモデルにあるUser_idのデータが削除される。
   has_many :post_images, dependent: :destroy
+
+  # Userモデル／PostCommentモデル (1:N)
+  # 1人のユーザが複数のコメントを行えるので、1:Nの関係です。
+  # Userモデルのデータが削除された場合、PostCommentモデルにあるUser_idのデータが削除される。
+  has_many :post_comments. dependent :destroy
 
   # ActiveStorageでプロフィール画像を保存できるように設定
   has_one_attached :profile_image

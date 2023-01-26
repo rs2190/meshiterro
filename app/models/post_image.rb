@@ -7,6 +7,26 @@ class PostImage < ApplicationRecord
 
     belongs_to :user
 
+    # belongs_to とは
+
+    # 今回も新たに、"belongs_to"というメソッドが出てきました。
+    # "belongs to〜"とは、直訳すると「〜に属する」という意味です。
+
+    # has_many の時と同様、"belongs_to :user"という記述を見ていきましょう。
+    # 直訳すると、「ユーザーに属する」ということになります。
+
+    # has_many とは逆に、1:N の「N」側にあたるモデルに、belongs_to を記載する必要があります。
+    # belongs_to は、PostImage モデルから user_id に関連付けられていて、User モデルを参照することができます。
+    # PostImage モデルに関連付けられるのは、1 つの User モデルです。
+    # このため、単数形の「user」になっている点に注意しましょう。
+
+    # PostImageモデル／PostCommentモデル(1:N)
+    # 1つの投稿画像に対して、複数のコメントを設定できます。 これも、1:Nの関係です。
+    has_many :PostComments, dependent: :destroy
+
+
+
+
     def get_image
 
         # get_imageというメソッドを作成しました。
@@ -53,17 +73,3 @@ class PostImage < ApplicationRecord
     end
 
 end
-
-# belongs_to とは
-
-# 今回も新たに、"belongs_to"というメソッドが出てきました。
-# "belongs to〜"とは、直訳すると「〜に属する」という意味です。
-
-# has_many の時と同様、"belongs_to :user"という記述を見ていきましょう。
-# 直訳すると、「ユーザーに属する」ということになります。
-
-# has_many とは逆に、1:N の「N」側にあたるモデルに、belongs_to を記載する必要があります。
-
-# belongs_to は、PostImage モデルから user_id に関連付けられていて、User モデルを参照することができます。
-# PostImage モデルに関連付けられるのは、1 つの User モデルです。
-# このため、単数形の「user」になっている点に注意しましょう。
