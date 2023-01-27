@@ -24,6 +24,17 @@ class PostImage < ApplicationRecord
     # 1つの投稿画像に対して、複数のコメントを設定できます。 これも、1:Nの関係です。
     has_many :post_comments, dependent: :destroy
 
+    has_many :favorites, dependent: :destroy
+
+
+    # このメソッドで、引数で渡されたユーザidがFavoritesテーブル内に存在（exists?）するかどうかを調べます。
+    # 存在していればtrue、存在していなければfalseを返すようにしています。
+    # Viewの作成で利用します。
+    def favorited_by?(user)
+
+        favorites.exists?(user_id: user.id)
+
+    end
 
     def get_image
 
