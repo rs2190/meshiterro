@@ -14,6 +14,20 @@
     <!--削除機能の作成は終わりましたが、これでは削除を実行する手段がないため、詳細画面に削除を実行するためのリンクを追記します。-->
     <%= link_to "削除", post_image_path(@post_image), method: :delete %>
   <% end %>
+
+  <% if @post_image.favorited_by?(current_user) %>
+    <p>
+      <%= link_to post_image_favorites_path(@post_image), method: :delete do %>
+        ♥<%= @post_image.favorites.count %> いいね
+      <% end %>
+    </p>
+    <% else %>
+    <p>
+      <%= link_to post_image_favorites_path(@post_image), method: :post do %>
+        ♡<%= @post_image.favorites.count %> いいね
+      <% end %>
+    </p>
+  <% end %>
 </div>
 
 <div>
