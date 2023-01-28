@@ -3,7 +3,10 @@ class UsersController < ApplicationController
   def show
 
     @user = User.find(params[:id])
-    @post_images = @user.post_images
+
+    # kaminari実装
+    # @post_images = @user.post_images
+    @post_images = @user.post_images.page(params[:page])
 
     # @post_imagesに関しては、見慣れない記述が出てきました。
     # これは、アソシエーションを持っているモデル同士の記述方法です。

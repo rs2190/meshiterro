@@ -4,9 +4,9 @@
     <ul>
       <% @post_image.errors.full_messages.each do |message| %>
         <li><%= message %></li>
-    <% end %>
+      <% end %>
     </ul>
-   <% end %>
+  <% end %>
 
   <%= form_with model: @post_image do |f| %>
 

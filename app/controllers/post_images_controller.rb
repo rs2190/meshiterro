@@ -77,7 +77,12 @@ class PostImagesController < ApplicationController
     # post_images_controller.rbファイルのindexに、以下のコードを記述します。
     # これで、タイムライン上に表示する投稿データを取得できるようになります。
 
-    @post_images = PostImage.all
+    # @post_images = PostImage.all
+
+    # indexアクションの中では、postimagesテーブル内の全データが取得されていました。
+    # これを、1ページ分の決められた数のデータだけを、新しい順に取得するように変更しています。
+    # pageメソッドは、kaminariをインストールしたことで使用可能になったメソッドです。
+    @post_images = PostImage.page(params[:page])
 
   end
 
