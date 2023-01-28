@@ -56,9 +56,18 @@ class PostImagesController < ApplicationController
 
     # これらをコードの中に記述することで、PostImage モデルに紐づくカラムの値を取得したり、逆に値を代入することができるということになります。
 
-    @post_image.save
-    # 一覧画面へ遷移する。
-    redirect_to post_images_path
+    # @post_image.save
+
+    if @post_image.save
+
+      # 一覧画面へ遷移する。
+      redirect_to post_images_path
+
+    else
+
+      render :new
+
+    end
 
   end
 

@@ -4,6 +4,16 @@
 
 class ApplicationController < ActionController::Base
 
+  before_action :authenticate_user!, except: [:top]
+
+  # このように記述することで、ログイン認証が済んでいない状態でトップページ以外の画面にアクセスしても、ログイン画面へリダイレクトするようになります。
+  # また、ログイン認証が済んでいる場合には全てのページにアクセスすることができます。
+  # before_actionメソッドは、このコントローラが動作する前に実行されます。
+  # 今回の場合、app/controllers/application_controller.rbファイルに記述したので、 すべてのコントローラで、最初にbefore_actionメソッドが実行されます。
+
+  # authenticate_userメソッドは、devise側が用意しているメソッドです。
+  # :authenticate_user!とすることによって、「ログイン認証されていなければ、ログイン画面へリダイレクトする」機能を実装できます。
+  # exceptは指定したアクションをbefore_actionの対象から外します。 Meshiterroではトップページのみログイン状態に関わらず、アクセス可能とするためにtopアクションを指定しています。
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -20,9 +30,6 @@ class ApplicationController < ActionController::Base
 
   # このように記述することで、devise利用の機能（ユーザ登録、ログイン認証など）が使われる前に
   # configure_permitted_parametersメソッドが実行されます。
-
-  # protectedについて
-  # https://qiita.com/tbpgr/items/6f1c0c7b77218f74c63e
 
   # サインイン後の遷移先
   def after_sign_in_path_for(resource)
@@ -67,6 +74,8 @@ class ApplicationController < ActionController::Base
   #   リダイレクト先のパス
   # end
 
+  # protectedについて
+  # https://qiita.com/tbpgr/items/6f1c0c7b77218f74c63e
   protected
 
   # デバイス版のストロングパラメーター

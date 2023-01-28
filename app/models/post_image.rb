@@ -26,6 +26,11 @@ class PostImage < ApplicationRecord
 
     has_many :favorites, dependent: :destroy
 
+    #shop_nameが存在しているかを確認するバリデーション
+    validates :shop_name, presence: :ture
+
+    #imageが存在しているかを確認するバリデーション
+    validates :image, presence: :true
 
     # このメソッドで、引数で渡されたユーザidがFavoritesテーブル内に存在（exists?）するかどうかを調べます。
     # 存在していればtrue、存在していなければfalseを返すようにしています。
