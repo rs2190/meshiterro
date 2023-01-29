@@ -2,15 +2,35 @@
 <html>
   <head>
     <title>Meshiterro</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!--<meta name="viewport" content="width=device-width,initial-scale=1">-->
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <!--%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %-->
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+    <!--上記の変更で、stylesheet_link_tagをstylesheet_pack_tagとしていますが、これが何をしているか解説します。-->
+    <!--stylesheet_link_tagの場合cssファイルは、app/assets 配下のファイルを参照します。-->
+    <!--stylesheet_pack_tagの場合は、app/javascript 配下のファイルを参照するようになります。-->
+
+    <!--このように記述するとapp/assets、app/javascriptを参照するようになります。-->
+
+    <!--どちらが正しいというのは一概に言えません。-->
+    <!--現場ではプロジェクトによってファイルの管理体制は様々です。-->
+    <!--知識として、知っておくべきことなので、覚えておいてください。-->
+
+    <!--stylesheet_pack_tagのみの記述で独自のcssを読み込ませる方法を紹介しておきます。-->
+
+    <!--1.app/javascript/stylesheets/application.scssにcssを記述する-->
+    <!--2.app/javascript/packs/application.jsに追加したcssファイルをimport で追加する-->
+
+
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <!--<body>-->
+  <body class="d-flex flex-column vh-100">
     <!-- % if user_signed_in? % は、devise 側で用意しているヘルパーメソッドです。-->
     <!--devise の機能を使ってログインしているか、ログインしていないかを判断し、どちらかによってブラウザに表示する内容を変更することができます。-->
     <!--具体的には、以下のような処理を行なっています。-->
@@ -18,26 +38,122 @@
     <!--ログイン済みならば true が、ログインしていなければ false が返されます。-->
     <!--ログイン済みの場合、% if user_signed_in? % から % else % 間のコードが表示されます。-->
     <!--ログインしていない場合、% else % から  % end % 間のコードが表示されます。-->
-  <header>
-    <% if user_signed_in? %>
-      <li>
-        <%= link_to '投稿フォーム', new_post_image_path %>
-      </li>
-      <li>
-        <%= link_to 'マイページ', user_path(current_user.id) %>
-      </li>
-      <li>
-        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-      </li>
-    <% else %>
-      <li>
-        <%= link_to "新規登録", new_user_registration_path %>
-      </li>
-      <li>
-        <%= link_to "ログイン", new_user_session_path %>
-      </li>
-    <% end %>
-  </header>
-  <%= yield %>
+  <!--<header>-->
+    <header class="shadow-sm">
+
+      <nav class="navbar navbar-expand-lg navbar-light">
+
+        <!--navbar-->
+        <!--navbar-expand-lg-->
+        <!--navbar-light-->
+        <!--それぞれのclassの役割は以下になります。-->
+
+        <!--navbar-->
+        <!--ナビゲーションバーの表示-->
+
+        <!--navbar-expand-[ブレークポイント]-->
+        <!--指定したブレークポイント（画面幅）に応じてナビゲーションバー、ナビゲーションアイコン（ハンバーガーメニュー）を切り替えて表示-->
+
+        <!--navbar-[カラースキーム]-->
+        <!--ナビゲーションのカラースキームの指定-->
+
+        <!--この3つのclassはセットで使用するように覚えておくといいです。-->
+        <!--例えばですが、navbar-[カラースキーム]の指定がないと画面幅が変化したときに、-->
+        <!--ナビゲーションアイコン（ハンバーガーメニュー）に配色が当たらないために画面上には要素は存在するが、-->
+        <!--見えないといったことが起こります。-->
+
+        <div class="container">
+          <a class="navbar-brand p-3" href="/"><%= image_tag('logo.png') %></a>
+
+          <!--navbar-brand-->
+          <!--p-3-->
+          <!--それぞれのclassの役割は以下になります。-->
+
+          <!--navbar-brand-->
+          <!--ロゴに使用されるnavbarのサポートclass-->
+
+          <!--p-[サイズ]-->
+          <!--paddingの指定-->
+          <!--※今回の場合は上下左右に対してサイズ指定されたpaddingが適応されています。-->
+          <!--上、下、左、右、上下、左右という指定の仕方もできます。-->
+          <!--詳細は公式を確認してみましょう。-->
+          <!--https://getbootstrap.jp/docs/4.5/utilities/spacing/-->
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!--button要素のnavbar-togglerとspan要素のnavbar-toggler-iconがナビゲーションアイコン（ハンバーガーメニュー）の見た目に関わるところです。-->
+          <!--以下のように覚えておくといいでしょう。-->
+
+          <!--navbar-toggler-->
+          <!--ナビゲーションアイコン（ハンバーガーメニュー）の枠部分-->
+
+          <!--navbar-toggler-icon-->
+          <!--ナビゲーションアイコン（ハンバーガーメニュー）の三本線部分-->
+          <!--※この三本線はnavbar-toggler-iconのclassに対してbackground-imageで画像が割り当てられています。-->
+          <!--検証ツールでnavbar-toggler-iconのclassを確認すると分かやすいです。-->
+
+          <!--次にナビゲーションアイコンの開いたり、閉じたりする動作と見た目の部分についてです。-->
+          <!--button要素と関係するため、合わせて見ていきましょう。-->
+
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+          <!--ナビゲーションアイコンの開閉する動作についてはBootstrapとjQueryが内部的に行っている部分です。-->
+          <!--ここは複雑な仕組みのため、以下のように簡単に覚えておくといいです。-->
+
+          <!--  ナビゲーションアイコンを開く前に隠しておきたいメニューは「collapse」classが付与された要素の中に入れておく-->
+          <!--  「collapse」classを付与している要素に任意のidを付与する-->
+          <!--  付与したidは「navbar-toggler」classが付与される要素のdata-targetに指定する（頭にセレクタ#をつける）-->
+          <!--   「navbar-toggler」classが付与される要素にdata-toggle="collapse"、data-target="#[id名]"、aria-controls="[id名]"、aria-expanded="false"、aria-label="Toggle navigation"-->
+          <!--※この内data-toggle="collapse"、data-target="#[id名]"は必ず指定しなければ、ナビゲーションアイコンの開閉を行うことができませんので、注意しましょう。-->
+            <ul class="navbar-nav ml-auto">
+            <% if user_signed_in? %>
+            <li class="nav-item">
+              <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'nav-link text-dark' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to '投稿フォーム', new_post_image_path, class: 'nav-link text-dark' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'マイページ', user_path(current_user.id), class: 'nav-link text-dark' %>
+            </li>
+            <% else %>
+            <li class="nav-item">
+              <%= link_to "新規登録", new_user_registration_path, class: 'nav-link text-dark' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "ログイン", new_user_session_path, class: 'nav-link text-dark' %>
+            </li>
+            <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="mb-auto">
+    <%= yield %>
+    </main>
+    <footer class="bg-dark text-white pt-5 pb-4">
+      <div class="container">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <p>善良な市民同士で無差別に食欲を煽るSNS</p>
+            <%= image_tag('logo-white.png') %>
+          </div>
+          <div class="col-md-8">
+            <h6 class="text-white mt-2 mb-3">Link</h6>
+            <ul class="p-0 list-unstyled">
+              <li>
+                <a href="" title="About" class="text-white-50">会社概要</a>
+              </li>
+              <li>
+                <a href="" title="License informations" class="text-white-50">プライバシーポリシー</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
-</html>

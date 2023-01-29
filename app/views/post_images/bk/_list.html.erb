@@ -1,0 +1,52 @@
+<!--コントローラから渡された@post_images変数内から1つずつ取り出して、post_image変数へ格納します。-->
+<!-- @post_images → post_images -->
+<!--% @post_images.each do |post_image| %-->
+<% post_images.each do |post_image| %>
+<div>
+  <!-- link_toで、post_image_path(post_image.id)のリンク先URLを指定しています。 /post_image/:idで、リンクが作成されます。-->
+  <!-- また、link_toでは、doからendの間が、aタグで囲まれた状態になります。 結果、image_tagは、aタグに囲まれたimgタグになります。-->
+  <%= link_to post_image_path(post_image.id) do %>
+      <!-- image_tagを使いpost_imageにActiveStorageで設定したimageを表示しています。-->
+      <!-- post_image.get_imageの部分はPostImageモデル内に記述したメソッドを呼び出しています。-->
+      <%= image_tag post_image.get_image %>
+  <% end %>
+
+  <!--※後半の章でユーザー画像設定について学習します。そこで書き換えなどを行ないますので、ここでは仮にsample-author1.jpgとしています。-->
+  <!--1章【アプリケーションを作成・準備しよう】 > 画像を用意 でダウンロードした画像を使用します。-->
+  <!--<P>投稿ユーザー画像：%= image_tag 'sample-author1.jpg' %</P>-->
+
+  <!--前提として、PostImagesコントローラーのIndexアクションでは@post_images変数にPostImageモデルから-->
+  <!--Allメソッドで全件取得したものを格納し、@post_images変数をeachメソッドで繰り返し処理を行い各レコードの内容はpost_imageというブロック変数に格納していました。-->
+  <!--また、ユーザーのプロフィール画像を保持しているのは、PostImageモデルに紐づけられたUserモデルでした。-->
+
+  <!--まず、各投稿から投稿したユーザー情報を取得するためにimage_tagには、post_image.userと記述します。-->
+  <!--これにより、Userモデルに記述してあるメソッドをよびだすことができ、Userモデルに定義した-->
+  <!--get_profile_imageメソッドも使えるようになります。-->
+  <!--よって、post_image.user.get_profile_image(100,100)とすることで、ユーザーのプロフィール画像を表示することができます。-->
+
+  <!--以上をまとめると、次のような流れになります。-->
+
+  <!-- 1. post_image.userで、投稿画像に紐づいたユーザーの情報(投稿したユーザーの情報)を取得できる-->
+  <!-- 2. 「.user」の部分でUserモデルを使用しているため、Userモデルに記述しているget_profile_imageメソッドが使えるようになる-->
+  <!-- 3. 結果、post_image.user.get_profile_imageと記述することで、投稿画像に紐づいたユーザーのプロフィール画像を表示できる-->
+
+  <!--これをコードに反映させると、次のような記述変更となります。-->
+
+  <P>投稿ユーザー画像：<%= image_tag post_image.user.get_profile_image(100,100) %></P>
+
+  <!--post_image変数のshop_nameカラムを表示します。 このカラムは、post_imageモデルに定義されています。-->
+  <p>ショップ名：<%= post_image.shop_name %></p>
+
+  <!--post_image変数のcaptionカラムを表示します。 このカラムも、post_imageモデルに定義されています。-->
+  <p>説明：<%= post_image.caption %></p>
+
+  <!--post_image変数のuser_idに関連付けられているuserモデルのnameカラムを表示します。 同様にこのカラムも、post_imageモデルに定義されています。-->
+  <!--実は、nameカラム以外にも、ユーザーモデルにカラムとして定義されている情報であれば取得できます。-->
+  <!--post_image.user.[ユーザーモデルのカラム]-->
+  <p>ユーザーネーム：<%= post_image.user.name %></p>
+
+  <p><%= link_to "#{post_image.post_comments.count} コメント", post_image_path(post_image.id) %></p>
+
+</div>
+<% end %>
+<%= paginate post_image %>

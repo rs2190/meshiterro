@@ -1,20 +1,69 @@
-<h1>画像投稿フォーム</h1>
-  <% if @post_image.errors.any? %>
-    <%= @post_image.errors.count %>件のエラーが発生しました
-    <ul>
-      <% @post_image.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  <% end %>
+<div class="container">
+  <div class="row no-gutters">
+     <!--フォーム部分を構成するclassには特別なルールは存在せず、自由に組み付けてもフォームとして機能しなくなることはありません。-->
+    <!--ですが基本的には、フォーム部品にはform-controlを使用し、それを囲う部分にはform-groupを使用します。-->
+    <!--※今回のMeshiterroの例ではform-groupを使用していません。-->
 
-  <%= form_with model: @post_image do |f| %>
+    <!--今回それよりも、注目したい箇所は以下のコードのcolを指定しているところです。-->
+    <div class="col-md-5 col-sm-10 mx-2 mx-sm-auto shadow-lg rounded px-0 my-5">
 
-    <h4>画像</h4>
-      <%= f.file_field :image, accept: "image/*" %>
-    <h4>ショップ名</h4>
-      <%= f.text_field :shop_name %>
-    <h4>説明</h4>
-      <%= f.text_area :caption %>
-    <%= f.submit '投稿' %>
-  <% end %>
+    <!--colのclassが二つあります。-->
+
+    <!--col-sm-10-->
+    <!--col-md-5-->
+    <!--これは画面幅が切り替わったときに、入力フォームの幅などを調節するためにcolを二つ指定しています。-->
+
+    <!--col-sm-10-->
+    <!--画面幅が576px以上のときに12分割したグリッドの10分割分の幅をとる-->
+    <!--※このときの10分割分の幅は親要素であるrowの幅に依存します。-->
+
+    <!--col-md-5-->
+    <!--画面幅が768px以上のときに12分割したグリッドの5分割分の幅をとる-->
+    <!--※このときの10分割分の幅は親要素であるrowの幅に依存します。-->
+
+    <!--復習になりますが、Bootstrap は幅を12 個のグリッド に分割するレイアウトシステムを持ちます。-->
+
+    <!--「col」classの指定ではcol-[ブレークポイント]-[カラム数（分割されたグリッド数）]という形式でclassを指定します。-->
+    <!--つまり、今回の例では画面幅が576px以上〜768px未満の時に10カラムの幅をとり、768px以上では5カラムの幅をとる。ということになります。-->
+
+    <!--例えば、-->
+
+    <!--親要素はrowのclassを持っていて600px、-->
+    <!--子要素はcol-md-5のclassを持っている.-->
+    <!--という場合の子要素の幅の計算式はいくつかありますが、-->
+    <!--「12等分したうちの5個分」という考え方では-->
+
+    <!--600 ÷ 12 × 5 = 250-->
+    <!--となり250pxの幅になります。-->
+
+    <!--このように複数のcolをブレークポイントごとに指定することで画面幅に応じたレイアウトを提供することができます。（レスポンシブレイアウト）-->
+    <!--ログイン、新規登録は投稿フォームと似たような構成になっていますので、投稿フォームを参考にするといいでしょう。-->
+
+      <h5 class="text-dark bg-light p-4 mb-0">画像投稿フォーム</h5>
+      <div class="form-body p-4">
+        <% if @post_image.errors.any? %>
+          <ul class="alert alert-danger" role="alert">
+            <h6 class="alert-heading">
+              <%= @post_image.errors.count %>件のエラーが発生しました
+            </h6>
+            <% @post_image.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        <% end %>
+        <%= form_with model: @post_image do |f| %>
+          <%= f.file_field :image, accept: "image/*", class: "w-100" %>
+          <div class="input-group mb-3 mt-4">
+            <div class="input-group-prepend">
+              <span class="input-group-text" aria-hidden="true"><i class="fas fa-building"></i></span>
+            </div>
+            <%= f.text_field :shop_name, class:"form-control", placeholder:"ショップ名" %>
+          </div>
+          <%= f.text_area :caption, class:"form-control", rows:"3", placeholder:"コメントここに" %>
+          <hr>
+          <%= f.submit '投稿', class:"btn btn-lg btn-block btn-info mt-4" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
